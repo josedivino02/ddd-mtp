@@ -1,4 +1,4 @@
-import Customer from '../../customer/entity/customers';
+import Customer from '../../customer/entity/customer';
 import Order from '../entity/order';
 import { v4 as uuid } from "uuid";
 import OrderItem from '../entity/order_item';
