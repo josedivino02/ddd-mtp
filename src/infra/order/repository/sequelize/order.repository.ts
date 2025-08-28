@@ -28,6 +28,21 @@ export default class OrderRepository implements OrderRepositoryInterface {
   }
 
   async update(entity: Order): Promise<void> {
+<<<<<<< HEAD
+=======
+    await OrderModel.update(
+      {
+        customer_id: entity.customerId,
+        total: entity.total()
+      },
+      {
+        where: {
+          id: entity.id,
+        }
+      }
+    )
+
+>>>>>>> d98a1ae2b23190266df1a8f9ff41ca8f2882cfe9
     const existingItems = await OrderItemModel.findAll({
       where: { order_id: entity.id },
     });
@@ -35,6 +50,7 @@ export default class OrderRepository implements OrderRepositoryInterface {
     const existingItemIds = existingItems.map((i) => i.id);
     const newItemIds = entity.items.map((i) => i.id);
 
+<<<<<<< HEAD
     await Promise.all(
       entity.items.map((item) => {
         if (existingItemIds.includes(item.id)) {
@@ -83,6 +99,38 @@ export default class OrderRepository implements OrderRepositoryInterface {
         where: { id: entity.id },
       }
     );
+=======
+    for (const item of entity.items) {
+      if (existingItemIds.includes(item.id)) {
+        await OrderItemModel.update(
+          {
+            name: item.name,
+            price: item.price,
+            product_id: item.productId,
+            quantity: item.quantity,
+          },
+          { where: { id: item.id } }
+        );
+      } else {
+        await OrderItemModel.create({
+          id: item.id,
+          name: item.name,
+          price: item.price,
+          product_id: item.productId,
+          quantity: item.quantity,
+          order_id: entity.id,
+        });
+      }
+    }
+
+    const itemsToRemove = existingItemIds.filter(
+      (id) => !newItemIds.includes(id)
+    );
+
+    if (itemsToRemove.length > 0) {
+      await OrderItemModel.destroy({ where: { id: itemsToRemove } });
+    }
+>>>>>>> d98a1ae2b23190266df1a8f9ff41ca8f2882cfe9
   }
 
   async find(id: string): Promise<Order> {
