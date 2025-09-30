@@ -5,17 +5,24 @@
     "@swc/jest": "^0.2.39",
     "@types/jest": "^30.0.0",
     "@types/mocha": "^10.0.10",
+    "@types/supertest": "^6.0.3",
     "jest": "^30.0.5",
+    "supertest": "^7.1.4",
     "ts-node": "^10.9.2",
     "tslint": "^5.20.1",
     "typescript": "^5.9.2"
   },
   "scripts": {
     "test": "npm run tsc -- --noEmit && jest",
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "dev": "nodemon src/infra/api/server.ts"
   },
   "dependencies": {
+    "@types/express": "^5.0.3",
     "@types/uuid": "^10.0.0",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10",
     "reflect-metadata": "^0.2.2",
     "sequelize": "^6.37.7",
     "sequelize-typescript": "^2.1.6",
